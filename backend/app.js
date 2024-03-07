@@ -13,7 +13,6 @@ app.options("*", cors());
 app.use(express.urlencoded());
 app.use("/api/users", require("./routes/userRoutes.js"));
 
-app.use("/api/ads", require("./routes/adRoutes"));
 app.use(errorHandler);
 
 
