@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.options("*", cors());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", require("./routes/userRoutes.js"));
 
 app.use(errorHandler);
