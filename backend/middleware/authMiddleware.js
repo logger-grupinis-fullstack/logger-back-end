@@ -9,7 +9,7 @@ const protect = asyncHandler(async(req, res, next) => {
         next()
     }
     else {
-        res.send(status, response)
+        res.status(status).send(response);
     };
 });
 
