@@ -14,6 +14,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required:[true, "Please add password"],
     },
+    confirmedPassword:{
+        type: String,
+        required: [true, "Please confirm password"],
+        validate: {
+            validator: function (value) {
+            return value === this.password;
+        },
+        message: "Passwords do not match",
+    },
+},
     role: {
         type: String,
         default: "simple",

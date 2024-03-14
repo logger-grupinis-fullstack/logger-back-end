@@ -4,9 +4,9 @@ const asyncHandler = require("express-async-handler")
 // user register
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { firstName, email, password } = req.body;
+    const { firstName, email, password, confirmedPassword } = req.body;
 
-    const user = await userService.registerUser(firstName, email, password)
+    const user = await userService.registerUser(firstName, email, password, confirmedPassword)
     res.status(201).json(user);
 });
 

@@ -9,9 +9,13 @@ const generateToken = (id) => {
 }
 
 class UserService {
-    async registerUser(firstName, email, password){
-        if (!firstName || !email || !password){
+    async registerUser(firstName, email, password, confirmedPassword){
+        if (!firstName || !email || !password || !confirmedPassword){
             throw new Error('Please fill all fields')
+        }
+
+        if (password !== confirmedPassword){
+            throw new Error("Passwords do not match")
         }
 
         const userExists = await User.findOne({ email });
