@@ -1,15 +1,15 @@
 # logger-back-end
 
-##Endpoints
+## Endpoints
 
 To install required modules run the following command in terminal:
 
 `npm i`
 
-###Register
+### Register
 
-\***\*Endpoint**:** `/api/users/register`
-\*\***Method**:** `Post`
+**Endpoint:** `/api/users/register`
+**Method:** `Post`
 
 ```js
 {
@@ -20,9 +20,9 @@ To install required modules run the following command in terminal:
 }
 ```
 
-###Login
+### Login
 
-**Endpoint**: `/api/users/login`
+**Endpoint:**: `/api/users/login`
 **Method**: `Post`
 
 ```js
@@ -32,13 +32,13 @@ To install required modules run the following command in terminal:
 }
 ```
 
-###Logout
+### Logout
 
-**Endpoint**: `/api/users/logout`
-**Method**: `Get` `AUTH`
+**Endpoint:** `/api/users/logout`
+**Method:** `Get` `AUTH`
 
-###Get User
+### Get User
 
-**Endpoint**: /api/users/user
-**Method**: `Get`
+**Endpoint:** /api/users/user
+**Method:** `Get`
 **Description:** Returns one or more users from the database.
