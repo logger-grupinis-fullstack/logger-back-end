@@ -1,79 +1,33 @@
-const User = require("../models/userModel.js");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const asyncHandler = require("express-async-handler");
+const userService = require("../services/userService")
+const asyncHandler = require("express-async-handler")
 
+// user register
 
+const registerUser = asyncHandler(async (req, res) => {
+    const { firstName, email, password } = req.body;
 
-const generateToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn: "30d",
-    });
-};
-
-
-// User register
-// @route POST /api/users
-// @access PUBLIC
-
-const registerUser = asyncHandler(async(req, res) => {
-    const {firstName, email, password} = req.body;
-
-    if(!firstName || !email || !password) {
-        res.status(400);
-        throw new Error("Please fill all fields");
-    };
-
-    const userExists = await User.findOne({email});
-
-    if(userExists) {
-        res.status(400);
-        throw new Error("User already exists");
-    };
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const user = await User.create({
-        firstName: firstName,
-        email: email,
-        password: hashedPassword,
-    });
-
-    if(user){
-        res.status(201).json({
-            _id:user.id,
-            firstName: user.firstName,
-            email: user.email,
-            token: generateToken(user._id),
-            role: user.role,
-        });
-    }
-    else {
-        res.status(400);
-        throw new Error("Invalid user data")
-    };
+    const user = await userService.registerUser(firstName, email, password)
+    res.status(201).json(user);
 });
 
-// login user
-// @ /api/users/login
+// user login
 
-const loginUser = asyncHandler(async(req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body;
-    const user = await User.findOne({email});
-    if(user && (await bcrypt.compare(password, user.password))) {
-        res.json({
-            _id: user.id,
-            firstName: user.firstName,
-            email: user.email,
-            token: generateToken(user._id)
-        });
-    }
-    else {
-        res.status(400)
-        throw new Error("Invalid credencials");
-    };
-});
+
+    const user = await userService.loginUser(email, password)
+    res.json(user)
+})
+
+// user logout
+
+const logoutUser = asyncHandler(async(req, res) => {
+    const userId = req.user._id;
+
+    const result = await userService.logoutUser(userId);
+
+    res.status(200).json(result)
+})
 
 
-module.exports = {registerUser, loginUser};
+module.exports = { registerUser, loginUser, logoutUser }
