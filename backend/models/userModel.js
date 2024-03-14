@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         default: "simple",
-    }
+    },
+    workTypes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WorkTypes' }],
 },
 {
     timestamps: true,
