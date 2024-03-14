@@ -5,24 +5,27 @@ const asyncHandler = require('express-async-handler')
 // @route: POST /api/workTypes
 
 const createWorkType = asyncHandler(async (req, res) => {
-    const {name, description} = req.body;
+    try {
+        const {name, description} = req.body;
 
-    if(!name || !description) {
-        res.status(400);
-        throw new Error("Please fill all fields");
-    };
+        if(!name || !description) {
+            res.status(400);
+            throw new Error("Please fill all fields");
+        };
 
+        const workType = await WorkType.create({
+            name: name,
+            description: description,
+            user: req.user._id,
+        })
 
-    const workType = await WorkType.create({
-        name: name,
-        description: description,
-        user: req.user._id,
-    })
+        req.user.workTypes.push(workType._id)
+        await req.user.save()
 
-    req.user.workTypes.push(workType._id)
-    await req.user.save()
-
-    res.status(201).json(workType)
+        res.status(201).json(workType)
+    }  catch (error) {
+        res.status(400).json({ success: false, error: error.message })
+    }
 })
 
 // get all user created workTypes by user id
@@ -53,34 +56,43 @@ const getAllWorkTypes = asyncHandler(async (req, res) => {
 // @route: PUT /api/workTypes/:id
 
 const updateWorkType = async function (req, res) {
-    const workType = await WorkType.findById(req.params.id)
-    if (!workType) {
-        res.status(404).send("Work type wasn't found")
-        return
-    }
+    try {
+        const workType = await WorkType.findById(req.params.id)
+        if (!workType) {
+            res.status(404).send("Work type wasn't found")
+            return
+        }
 
-    if (req.body.name) {
-        workType.description = req.body.name
-    }
-    if (req.body.description) {
-        workType.description = req.body.description
-    }
+        if (req.body.name) {
+            workType.description = req.body.name
+        }
+        if (req.body.description) {
+            workType.description = req.body.description
+        }
 
-    const result = await workType.save()
-    res.status(200).json(result)
+        const result = await workType.save()
+        res.status(200).json(result)
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message })
+    }
 }
 
 // delete any saving by saving ID
 // @route: DELETE /api/workTypes/:id
 
 const deleteWorkType = async function (req, res) {
-    const workType = await WorkType.findById(req.params.id)
-    if (!workType) {
-        res.status(404).send("Work type wasn't found")
-        return
+    try {
+        const workType = await WorkType.findById(req.params.id)
+        if (!workType) {
+            res.status(404).send("Work type wasn't found")
+            return
+        }
+        const result = await WorkType.deleteOne({ _id: req.params.id })
+        res.status(200).send(result)
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message }) 
     }
-    const result = await WorkType.deleteOne({ _id: req.params.id })
-    res.status(200).send(result)
+
 }
 
 module.exports = {
