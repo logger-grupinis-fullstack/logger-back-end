@@ -19,4 +19,15 @@ const loginUser = asyncHandler(async (req, res) => {
     res.json(user)
 })
 
-module.exports = { registerUser, loginUser }
+// user logout
+
+const logoutUser = asyncHandler(async(req, res) => {
+    const userId = req.user._id;
+
+    const result = await userService.logoutUser(userId);
+
+    res.status(200).json(result)
+})
+
+
+module.exports = { registerUser, loginUser, logoutUser }

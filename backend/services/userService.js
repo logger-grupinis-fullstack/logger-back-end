@@ -58,6 +58,10 @@ class UserService {
             token: generateToken(user._id),
         }
     }
+
+    async logoutUser(userId){
+        return { message: "Logged out sucessfully"}
+    }
 }
 
 module.exports = new UserService()
