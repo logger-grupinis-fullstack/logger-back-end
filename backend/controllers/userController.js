@@ -8,9 +8,9 @@ const registerUser = asyncHandler(async (req, res) => {
 
     try {
         const user = await userService.registerUser(firstName, email, password);
-        res.status(201).json(user);
+        res.status(201).json({ message: "Registration Successful", user });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: "Registration failed" + error.message });
     }
 });
 
@@ -21,9 +21,9 @@ const loginUser = asyncHandler(async (req, res) => {
 
     try {
         const user = await userService.loginUser(email, password);
-        res.json(user);
+        res.json({ message: "Login Successful", user });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: "Login failed" + error.message });
     }
 });
 
@@ -36,9 +36,8 @@ const logoutUser = asyncHandler(async (req, res) => {
         const result = await userService.logoutUser(userId);
         res.status(200).json(result);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        res.status(400).json({ error: "Logout failed" + error.message });
     }
 });
-
 
 module.exports = { registerUser, loginUser, logoutUser }
