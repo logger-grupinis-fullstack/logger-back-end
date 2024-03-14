@@ -4,7 +4,7 @@ const { registerUser, loginUser, logoutUser } = require("../controllers/userCont
 const protect = require("../middleware/authMiddleware.js");
 // /api/users/
 
-router.post("/", registerUser);
+router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", protect, logoutUser)
 router.get("/user", protect, (req, res) => {
