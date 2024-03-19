@@ -13,12 +13,10 @@ app.use(cors());
 app.options("*", cors());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", require("./routes/userRoutes.js"));
-app.use("api/workTypes", require("./routes/workTypeRoutes.js"))
+app.use("/api/workTypes", require("./routes/workTypeRoutes.js"));
 
 app.use(errorHandler);
 
-
 app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`);
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
-

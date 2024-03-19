@@ -1,19 +1,20 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
 const {
-    createWorkType,
-    getWorkTypes,
-    getAllWorkTypes,
-    updateWorkType,
-    deleteWorkType,
-} = require('../controllers/workTypeController.js')
-const protect = require('../middleware/authMiddleware.js')
+  createWorkType,
+  getWorkTypes,
+  getAllWorkTypes,
+  updateWorkType,
+  deleteWorkType,
+} = require("../controllers/workTypeController.js");
+const protect = require("../middleware/authMiddleware.js");
 
-router.post('/', protect, createWorkType)
-router.get('/:id/all', protect, getWorkTypes)
-router.get('/all', protect, getAllWorkTypes)
-router.put('/:id', updateWorkType)
-router.delete('/:id', deleteWorkType)
+// router.get("/:id/all", protect, getWorkTypes);
+router.put("/:id", protect, updateWorkType);
+router.delete("/:id", protect, deleteWorkType);
 
-module.exports = router
+// router.get("/all", protect, getAllWorkTypes);
+router.post("/", protect, createWorkType);
+
+module.exports = router;
