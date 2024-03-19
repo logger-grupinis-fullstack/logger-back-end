@@ -55,7 +55,7 @@ const updateWorkType = async function (req, res) {
   }
 };
 
-// delete any saving by saving ID
+// delete any workType by workType ID
 // @route: DELETE /api/workTypes/:id
 
 const deleteWorkType = async function (req, res) {
