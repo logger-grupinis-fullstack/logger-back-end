@@ -1,72 +1,75 @@
 const asyncHandler = require("express-async-handler");
-const WorkTypeService = require("../services/workTypeService");
 
-const workTypeService = new WorkTypeService();
+// create WorkType
+// @route: POST /api/workTypes
 
 const createWorkType = asyncHandler(async (req, res) => {
   try {
     const { name, description } = req.body;
-    const userId = req.user._id;
 
-    const workType = await workTypeService.createWorkType(
-      name,
-      description,
-      userId,
-    );
+    if (!name || !description) {
+      res.status(400).json({
+        success: false,
+        error: "Please provide both name and description.",
+      });
+      return;
+    }
+
+    const workType = await WorkType.create({
+      name: name,
+      description: description,
+      user: req.user._id,
+    });
+
     req.user.workTypes.push(workType._id);
     await req.user.save();
 
-    res.status(201).json(workType);
+    res.status(201).json({ success: true, data: workType });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }
 });
 
-const getWorkTypes = asyncHandler(async (req, res) => {
+// update workType by id
+// @route: PUT /api/workTypes/:id
+
+const updateWorkType = async function (req, res) {
   try {
-    const userId = req.user._id;
-    const workTypes = await workTypeService.getWorkTypesByUserId(userId);
-    res.status(200).json({ success: true, data: workTypes });
+    const workType = await WorkType.findById(req.params.id);
+    if (!workType) {
+      res.status(404).json({ success: false, error: "Work type not found." });
+      return;
+    }
+
+    if (req.body.name) {
+      workType.name = req.body.name;
+    }
+    if (req.body.description) {
+      workType.description = req.body.description;
+    }
+
+    const result = await workType.save();
+    res.status(200).json({ success: true, data: result });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }
-});
-
-const getAllWorkTypes = asyncHandler(async (req, res) => {
-  try {
-    const workTypes = await workTypeService.getAllWorkTypes();
-    res.status(200).json({ success: true, data: workTypes });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-});
-
-const updateWorkType = asyncHandler(async (req, res) => {
-  try {
-    const id = req.params.id;
-    const updates = req.body;
-
-    const result = await workTypeService.updateWorkTypeById(id, updates);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-});
-
-const deleteWorkType = asyncHandler(async (req, res) => {
-  try {
-    const id = req.params.id;
-    const result = await workTypeService.deleteWorkTypeById(id);
-    res.status(200).json(result);
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-});
-
-module.exports = {
-  createWorkType,
-  getWorkTypes,
-  getAllWorkTypes,
-  updateWorkType,
-  deleteWorkType,
 };
+
+// delete any saving by saving ID
+// @route: DELETE /api/workTypes/:id
+
+const deleteWorkType = async function (req, res) {
+  try {
+    const workType = await WorkType.findById(req.params.id);
+    if (!workType) {
+      res.status(404).json({ success: false, error: "Work type not found." });
+      return;
+    }
+    const result = await WorkType.deleteOne({ _id: req.params.id });
+    res.status(200).json({ success: true, data: result });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+module.exports = { createWorkType, updateWorkType, deleteWorkType };
