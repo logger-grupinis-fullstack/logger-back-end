@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "simple",
     },
-    workTypes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WorkTypes' }],
+    workTypes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'WorkType' }],
 },
 {
     timestamps: true,
