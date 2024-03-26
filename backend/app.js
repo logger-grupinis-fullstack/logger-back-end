@@ -14,6 +14,7 @@ app.options("*", cors());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", require("./routes/userRoutes.js"));
 app.use("/api/workTypes", require("./routes/workTypeRoutes.js"));
+app.use("/api/projects", require("./routes/projectRoutes.js"));
 
 app.use(errorHandler);
 

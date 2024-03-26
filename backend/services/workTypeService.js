@@ -49,4 +49,4 @@ class WorkTypeService {
   }
 }
 
-module.exports = WorkTypeService;
+module.exports = new WorkTypeService();

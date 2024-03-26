@@ -6,6 +6,7 @@ const {
   logoutUser,
 } = require("../controllers/userController.js");
 const protect = require("../middleware/authMiddleware.js");
+
 // /api/users/
 
 router.post("/register", registerUser);
