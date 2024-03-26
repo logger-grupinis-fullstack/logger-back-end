@@ -55,17 +55,17 @@ To install required modules run the following command in terminal:
 }
 ```
 
-### Get all work types
+### Get ALL work types
 
 - **Endpoint:** `/api/workTypes`
 - **Method:** `GET`
 
-## Get ALL work types of current user
+### Get ALL work types of current user
 
 - **Endpoint:** `/api/workTypes/user`
 - **Method:** `GET`
 
-## Update work type by id
+### Update work type by id
 
 - **Endpoint:** `/api/workTypes/:id`
 - **Method:** `PUT`
@@ -76,12 +76,14 @@ To install required modules run the following command in terminal:
 }
 ```
 
-## Delete work type by id
+### Delete work type by id
 
 - **Endpoint:** `/api/workTypes/:id`
 - **Method:** `DELETE`
 
-## Create project
+## Projects Endpoints
+
+### Create project
 
 - **Endpoint:** `/api/projects`
 - **Method:** `POST`
@@ -94,17 +96,17 @@ To install required modules run the following command in terminal:
 }
 ```
 
-## Get ALL projects
+### Get ALL projects
 
 - **Endpoint:** `/api/projects`
 - **Method:** `GET`
 
-## Get ALL projects of current user
+### Get ALL projects of current user
 
 - **Endpoint:** `/api/projects/user`
 - **Method:** `GET`
 
-## Update project by id
+### Update project by id
 
 - **Endpoint:** `/api/projects/:id`
 - **Method:** `PUT`
@@ -117,7 +119,7 @@ To install required modules run the following command in terminal:
 }
 ```
 
-## Delete project by id
+### Delete project by id
 
 - **Endpoint:** `/api/projects/:id`
 - **Method:** `DELETE`
