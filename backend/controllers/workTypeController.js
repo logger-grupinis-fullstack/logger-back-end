@@ -1,75 +1,80 @@
 const asyncHandler = require("express-async-handler");
+const workTypeService = require("../services/workTypeService");
+
 
 // create WorkType
 // @route: POST /api/workTypes
 
 const createWorkType = asyncHandler(async (req, res) => {
+  const { name, description } = req.body;
+  const userId = req.user.id;
+
   try {
-    const { name, description } = req.body;
-
-    if (!name || !description) {
-      res.status(400).json({
-        success: false,
-        error: "Please provide both name and description.",
-      });
-      return;
-    }
-
-    const workType = await WorkType.create({
-      name: name,
-      description: description,
-      user: req.user._id,
-    });
-
-    req.user.workTypes.push(workType._id);
-    await req.user.save();
-
-    res.status(201).json({ success: true, data: workType });
+      const workType = await workTypeService.createWorkType(name, description, userId);
+      res.status(201).json({ message: "Work type created successfully", workType });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+      res.status(400).json({ error: "Work type creation failed: " + error.message });
   }
 });
 
-// update workType by id
+// get all workTypes
+// @route: GET /api/workTypes
+
+const getAllWorkTypes = asyncHandler(async (req, res) => {
+  try {
+    const workTypes = await workTypeService.getAllWorkTypes();
+    res.status(200).json({ message: "Work types fetched successfully", workTypes });
+  } catch (error) {
+    res.status(400).json({ error: "Work types fetch failed: " + error.message });
+  }
+})
+
+
+// Get WorkTypes by User ID
+// @route: GET /api/workTypes/user
+
+const getWorkTypesByUserId = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  
+  try {
+    const workTypes = await workTypeService.getWorkTypesByUserId(userId);
+    res.status(200).json({ message: "Work types fetched successfully", workTypes });
+  } catch (error) {
+    res.status(400).json({ error: "Work types fetch failed: " + error.message });
+  }
+});
+
+
+// update workType by ID
 // @route: PUT /api/workTypes/:id
 
-const updateWorkType = async function (req, res) {
+const updateWorkTypeById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
   try {
-    const workType = await WorkType.findById(req.params.id);
-    if (!workType) {
-      res.status(404).json({ success: false, error: "Work type not found." });
-      return;
-    }
-
-    if (req.body.name) {
-      workType.name = req.body.name;
-    }
-    if (req.body.description) {
-      workType.description = req.body.description;
-    }
-
-    const result = await workType.save();
-    res.status(200).json({ success: true, data: result });
+    const updatedWorkType = await workTypeService.updateWorkTypeById(id, updates);
+    res.status(200).json({ message: "Work type updated successfully", workType: updatedWorkType });
   } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
+    res.status(400).json({ error: "Failed to update work type: " + error.message });
   }
-};
+});
 
 // delete any workType by workType ID
 // @route: DELETE /api/workTypes/:id
 
-const deleteWorkType = async function (req, res) {
-  try {
-    const workType = await WorkType.findById(req.params.id);
-    if (!workType) {
-      res.status(404).json({ success: false, error: "Work type not found." });
-      return;
-    }
-    const result = await WorkType.deleteOne({ _id: req.params.id });
-    res.status(200).json({ success: true, data: result });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-};
+const deleteWorkTypeById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
 
-module.exports = { createWorkType, updateWorkType, deleteWorkType };
+  try {
+    const result = await workTypeService.deleteWorkTypeById(id);
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: "Work type not found" });
+    }
+    res.status(200).json({ message: "Work type deleted successfully" });
+  } catch (error) {
+    res.status(400).json({ error: "Failed to delete work type: " + error.message });
+  }
+});
+
+module.exports = { createWorkType, getAllWorkTypes, getWorkTypesByUserId, updateWorkTypeById, deleteWorkTypeById };
