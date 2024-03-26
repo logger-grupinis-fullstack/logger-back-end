@@ -30,7 +30,7 @@ const getAllWorkTypes = asyncHandler(async (req, res) => {
 })
 
 
-// Get WorkTypes by User ID
+// Get WorkTypes by user id
 // @route: GET /api/workTypes/user
 
 const getWorkTypesByUserId = asyncHandler(async (req, res) => {
@@ -45,7 +45,7 @@ const getWorkTypesByUserId = asyncHandler(async (req, res) => {
 });
 
 
-// update workType by ID
+// update workType by id
 // @route: PUT /api/workTypes/:id
 
 const updateWorkTypeById = asyncHandler(async (req, res) => {
@@ -60,7 +60,7 @@ const updateWorkTypeById = asyncHandler(async (req, res) => {
   }
 });
 
-// delete any workType by workType ID
+// delete any workType by workType id
 // @route: DELETE /api/workTypes/:id
 
 const deleteWorkTypeById = asyncHandler(async (req, res) => {
