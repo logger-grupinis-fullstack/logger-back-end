@@ -1,8 +1,8 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const connectToDB = require("./config/db.js");
-const errorHandler = require("./middleware/errorHandler.js");
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectToDB = require('./config/db.js');
+const errorHandler = require('./middleware/errorHandler.js');
 
 connectToDB();
 
@@ -10,11 +10,12 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.options("*", cors());
+app.options('*', cors());
 app.use(express.urlencoded({ extended: false }));
-app.use("/api/users", require("./routes/userRoutes.js"));
-app.use("/api/workTypes", require("./routes/workTypeRoutes.js"));
-app.use("/api/projects", require("./routes/projectRoutes.js"));
+app.use('/api/users', require('./routes/userRoutes.js'));
+app.use('/api/workTypes', require('./routes/workTypeRoutes.js'));
+app.use('/api/projects', require('./routes/projectRoutes.js'));
+app.use('/api/workDone', require('./routes/workDoneRoutes.js'));
 
 app.use(errorHandler);
 
