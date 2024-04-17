@@ -172,4 +172,4 @@ To install required modules run the following command in terminal:
 ### Delete work done by id
 
 - **Endpoint:** `/api/workDone/:id`
-- # **Method:** `DELETE`
+- **Method:** `DELETE`
