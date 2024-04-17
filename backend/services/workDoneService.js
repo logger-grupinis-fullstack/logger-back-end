@@ -1,7 +1,7 @@
 const WorkDone = require('../models/WorkDone');
 
 class WorkDoneService {
-  async createWorkType(
+  async createWorkDone(
     workTypeId,
     projectId,
     description,
