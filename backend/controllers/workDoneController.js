@@ -3,24 +3,27 @@ const workDoneService = require('../services/workDoneService');
 
 // create WorkDone// @route: POST /api/workDone
 
-const createWorkType = asyncHandler(async (req, res) => {
-  const { name, description } = req.body;
+const createWorkDone = asyncHandler(async (req, res) => {
+  const { workDoneId, projectId, description, startTime, endTime } = req.body;
 
   const userId = req.user.id;
 
   try {
-    const workType = await workTypeService.createWorkType(
-      name,
+    const workDone = await workDoneService.createWorkDone(
+      workDoneId,
+      projectId,
       description,
+      startTime,
+      endTime,
       userId
     );
     res
       .status(201)
-      .json({ message: 'Work type created successfully', workType });
+      .json({ message: 'Work done created successfully', workDone });
   } catch (error) {
     res
       .status(400)
-      .json({ error: 'Work type creation failed: ' + error.message });
+      .json({ error: 'Work done creation failed: ' + error.message });
   }
 });
 
@@ -56,26 +59,26 @@ const getWorkDoneByUserId = asyncHandler(async (req, res) => {
   }
 });
 
-// update workType by id
-// @route: PUT /api/workTypes/:id
+// update workDone by id
+// @route: PUT /api/workDone/:id
 
-const updateWorkTypeById = asyncHandler(async (req, res) => {
+const updateWorkDoneById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
 
   try {
-    const updatedWorkType = await workTypeService.updateWorkTypeById(
+    const updatedWorkDone = await workDoneService.updateWorkDoneById(
       id,
       updates
     );
     res.status(200).json({
-      message: 'Work type updated successfully',
-      workType: updatedWorkType,
+      message: 'Work done updated successfully',
+      workDone: updatedWorkDone,
     });
   } catch (error) {
     res
       .status(400)
-      .json({ error: 'Failed to update work type: ' + error.message });
+      .json({ error: 'Failed to update work done: ' + error.message });
   }
 });
 
