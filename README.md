@@ -10,6 +10,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/users/register`
 - **Method:** `POST`
+
 ```js
 {
     "firstname": "Jonas",
@@ -23,6 +24,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/users/login`
 - **Method:** `POST`
+
 ```js
 {
     "email": "jonas@gmail.com",
@@ -41,13 +43,13 @@ To install required modules run the following command in terminal:
 - **Method:** `GET`
 - **Description:** Returns one or more users from the database.
 
-
 ## Work types Endpoints
 
 ### Create Work Type
 
 - **Endpoint:** `/api/workTypes`
 - **Method:** `POST`
+
 ```js
 {
     "name": "Test work type",
@@ -69,6 +71,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/workTypes/:id`
 - **Method:** `PUT`
+
 ```js
 {
     "name": "Updated Test work type",
@@ -87,6 +90,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/projects`
 - **Method:** `POST`
+
 ```js
 {
     "name": "New project",
@@ -110,6 +114,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/projects/:id`
 - **Method:** `PUT`
+
 ```js
 {
     "name": "Updated New project",
@@ -122,4 +127,49 @@ To install required modules run the following command in terminal:
 ### Delete project by id
 
 - **Endpoint:** `/api/projects/:id`
+- **Method:** `DELETE`
+
+### Work done Endpoints
+
+### Create Work done
+
+- **Endpoint:** `/api/workDone`
+- **Method:** `POST`
+
+```js
+{
+    "workType": "workTypeId",
+    "project": "projectId",
+    "description": "Work done description",
+    "startTime": "Start time string",
+    "endTime": "End time string",
+}
+```
+
+### Get ALL work done
+
+- **Endpoint:** `/api/workDone`
+- **Method:** `GET`
+
+### Get ALL work done of current user
+
+- **Endpoint:** `/api/workDone/user`
+- **Method:** `GET`
+
+### Update work done by id
+
+- **Endpoint:** `/api/workDone/:id`
+- **Method:** `PUT`
+
+```js
+{
+    "description": "Updated work done description",
+    "startTime": "Updated Start time string",
+    "endTime": "Updated End time string",
+}
+```
+
+### Delete work done by id
+
+- **Endpoint:** `/api/workDone/:id`
 - **Method:** `DELETE`
