@@ -10,6 +10,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/users/register`
 - **Method:** `POST`
+
 ```js
 {
     "firstname": "Jonas",
@@ -23,6 +24,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/users/login`
 - **Method:** `POST`
+
 ```js
 {
     "email": "jonas@gmail.com",
@@ -33,7 +35,7 @@ To install required modules run the following command in terminal:
 ### User Logout
 
 - **Endpoint:** `/api/users/logout`
-- **Method:** `GET` `AUTH`
+- **Method:** `POST`
 
 ### Get User
 
@@ -41,13 +43,13 @@ To install required modules run the following command in terminal:
 - **Method:** `GET`
 - **Description:** Returns one or more users from the database.
 
-
 ## Work types Endpoints
 
 ### Create Work Type
 
 - **Endpoint:** `/api/workTypes`
 - **Method:** `POST`
+
 ```js
 {
     "name": "Test work type",
@@ -69,6 +71,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/workTypes/:id`
 - **Method:** `PUT`
+
 ```js
 {
     "name": "Updated Test work type",
@@ -87,6 +90,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/projects`
 - **Method:** `POST`
+
 ```js
 {
     "name": "New project",
@@ -110,6 +114,7 @@ To install required modules run the following command in terminal:
 
 - **Endpoint:** `/api/projects/:id`
 - **Method:** `PUT`
+
 ```js
 {
     "name": "Updated New project",
